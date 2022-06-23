@@ -1,31 +1,40 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ErrorPageComponent } from './shared/error-page/error-page.component';
-import { AuthGuard } from './auth/guards/auth.guard';
+import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { LoginComponent } from './components/auth/pages/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { RoomChatComponent } from './components/room/room-chat/room-chat.component';
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'home',
-    loadChildren: () => import('./main/main.module').then( m => m.MainModule),
-    // canLoad: [ AuthGuard ],
-    canActivate: [AuthGuard]
+    component: HomeComponent,
+  },
+  {
+    path: `home/room-chat/:id`,
+    component: RoomChatComponent,
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
   },
   {
     path: '404',
-    component: ErrorPageComponent
+    component: ErrorPageComponent,
   },
   {
     path: '**',
-    redirectTo: 'home'
-  }
-]
+    redirectTo: 'home',
+  },
+];
 
 @NgModule({
-  imports: [ RouterModule.forRoot( routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
