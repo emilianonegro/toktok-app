@@ -1,0 +1,13 @@
+<div class="containerUsersOnline"
+    fxLayout.xs="column">    
+    <mat-card class="example-card">
+        <mat-card-title>Online Users</mat-card-title>        
+        <mat-divider inset></mat-divider>     
+        <mat-card-content *ngFor="let user of usersActivesObs | async">            
+            <li class="onlineUserName" *ngIf="user.room == roomIdNew && user.name != 'without-name'">
+                <div class="online"></div>
+                <p class="onlineP">{{user.user}}</p>
+            </li>
+        </mat-card-content>
+    </mat-card>    
+</div>

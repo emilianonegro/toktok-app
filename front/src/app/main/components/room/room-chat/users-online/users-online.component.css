@@ -1,0 +1,36 @@
+.containerUsersOnline{
+    height: 430px;
+}
+
+mat-card{
+    overflow: auto;
+    max-height: 400px;
+}
+mat-card-content{
+    margin: 0;
+}
+
+.StatusContainer{
+    width: 150px;
+    background-color: #444;
+}
+.online{
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+}
+
+.onlineUserName{
+    display: flex;
+    align-items: center;
+}
+.onlineP{
+    margin:  10px 0px;
+    text-transform: capitalize;
+    
+
+}
+.offline{
+    color: red;
+}

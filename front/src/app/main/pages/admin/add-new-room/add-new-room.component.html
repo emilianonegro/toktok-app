@@ -1,0 +1,18 @@
+<form 
+    class="newRoomContainer"
+    (ngSubmit)="add()"
+    fxLayout="column">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>New Room Name</mat-label>
+        <input 
+            matInput
+            name="name"
+            [(ngModel)]="newName.name">
+    </mat-form-field>
+    <button 
+        id="btnAddRoom"
+        type="submit"
+        mat-raised-button 
+        color="primary">Generate New Room
+    </button>
+</form>

@@ -1,0 +1,13 @@
+<form class="logInContainer" (ngSubmit)="login()">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>User Name</mat-label>
+    <input matInput name="name" [(ngModel)]="name" />
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="name.trim().length === 0"
+  >
+    Log In
+  </button>
+</form>

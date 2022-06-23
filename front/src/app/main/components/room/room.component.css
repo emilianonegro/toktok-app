@@ -1,0 +1,25 @@
+.roomContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.example-card {
+  min-width: 250px;
+  text-align: center;
+}
+
+mat-card-title {
+  margin-bottom: 2rem;
+}
+
+mat-card-actions {
+  margin-top: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(227, 227, 227);
+  letter-spacing: 1px;
+}

@@ -1,0 +1,57 @@
+<app-nav-bar></app-nav-bar>
+<div fxLayout="row" fxLayoutAlign="center center" class="roomChatContainer">
+    <div>         
+        <app-users-online usersOnline="usersOnline"></app-users-online>                     
+    </div>  
+    <div class=" cardChat" fxLayoutAlign="center">
+        <mat-card   
+                    fxLayout="column">       
+        <div  fxLayout="row" fxLayoutAlign="space-between center" id="containerTitle">
+            <mat-card-title>{{ roomName }}</mat-card-title>    
+            <button 
+                mat-icon-button
+                (click)="leaveRoom()"
+                color="warn">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>  
+            <mat-card-content 
+            fxLayout="column" 
+            class="chat-messages-show-container" 
+            id="message-list" 
+           > 
+                <li 
+                *ngFor="let msg of messageArray"
+                class="message"
+                [ngClass]="{'message-from-me': msg.user === userOnline, 'message-from-other' : msg.user !== userOnline }"
+                >  
+                <span class="message-sender-name"> 
+                    {{msg.user}}
+                </span>
+                <span>                        
+                    {{msg.message}}                     
+                </span>                        
+            </li>
+        </mat-card-content>
+        <form class="InputContainer" (ngSubmit)="sendMessage()">
+            <input 
+                class="inputChat"
+                matInput
+                type="text"
+                name="messageText" 
+                [(ngModel)]="messageText">
+            <span class="spacer"></span>            
+            <button 
+                mat-flat-button 
+                color="primary"
+                type="submit">
+                <mat-icon>send</mat-icon>
+            </button>
+        </form>       
+    </mat-card> 
+    </div>  
+      
+</div>
+
+
+
