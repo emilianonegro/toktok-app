@@ -5,6 +5,8 @@ dotenv.config();
 const HOSTING_URL = "//localhost:27017";
 const MONGO_URL = `mongodb:${HOSTING_URL}/tokTok`;
 
+const SECRET_JWT_SEED = "EstOdeb3DeSERCompLic4d02080";
+
 const SERVER_PORT = process.env.SERVER_PORT
   ? Number(process.env.SERVER_PORT)
   : 3000;
@@ -20,5 +22,8 @@ export const config = {
   },
   frontend: {
     port: FRONTEND_URL,
+  },
+  seed: {
+    port: SECRET_JWT_SEED,
   },
 };

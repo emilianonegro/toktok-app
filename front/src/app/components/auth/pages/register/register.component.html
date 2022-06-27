@@ -1,1 +1,56 @@
-<p>register works!</p>
+<form
+  class="logInContainer"
+  autocomplete="off"
+  [formGroup]="myform"
+  (ngSubmit)="register()"
+>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      type="email"
+      formControlName="name"
+      placeholder="Enter your name"
+      required
+      required="true"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      type="email"
+      formControlName="email"
+      placeholder="Enter your email"
+      required
+      required="true"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      type="password"
+      formControlName="password"
+      placeholder="Enter your password"
+      required
+      required="true"
+    />
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    type="submit"
+    color="primary"
+    [disabled]="myform.invalid"
+  >
+    Create new account
+  </button>
+
+  <div class="conteiner-account">
+    <span> ¿You are already a member? </span>
+    <br />
+    <a routerLink="/login">ENTER HERE</a>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+.logInContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+input {
+  color: #fff;
+}
+
+.conteiner-account {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.conteiner-account > span {
+  color: #000;
+}
+
+.conteiner-account > a {
+  margin-top: 7px;
+  color: #4e006d;
+  text-decoration: none;
+}

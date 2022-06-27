@@ -10,9 +10,9 @@ export class ApiService {
 
   constructor(private _http: HttpClient) {}
   getRoom(url: any) {
-    return this._http.get(`${this.baseUrl}${url}`);
+    return this._http.get(`${this.baseUrl}room/${url}`);
   }
   getOldMessages(url: any) {
-    return this._http.get(`${this.baseUrl}${url}`);
+    return this._http.get(`${this.baseUrl}room/${url}`);
   }
 }

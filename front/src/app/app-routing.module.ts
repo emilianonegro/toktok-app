@@ -5,11 +5,16 @@ import { LoginComponent } from './components/auth/pages/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RoomChatComponent } from './components/room/room-chat/room-chat.component';
+import { RegisterComponent } from './components/auth/pages/register/register.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'home',

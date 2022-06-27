@@ -1,13 +1,47 @@
 <form class="logInContainer" (ngSubmit)="login()">
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>User Name</mat-label>
-    <input matInput name="name" [(ngModel)]="name" />
+    <mat-label>Nick Name</mat-label>
+    <input
+      matInput
+      type="text"
+      name="name"
+      [(ngModel)]="name"
+      required
+      required="true"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      required
+      required="true"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      required
+    />
   </mat-form-field>
   <button
     mat-raised-button
     color="primary"
-    [disabled]="name.trim().length === 0"
+    [disabled]="password.trim().length < 6"
   >
     Log In
   </button>
+
+  <div class="conteiner-account">
+    <span> ¿Create new account? </span>
+    <br />
+    <a routerLink="/register">ENTER HERE</a>
+  </div>
 </form>

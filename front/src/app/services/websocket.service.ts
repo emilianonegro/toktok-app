@@ -35,6 +35,7 @@ export class WebsocketService {
   logoutWS() {
     this.user = User;
     localStorage.removeItem('user');
+    localStorage.clear();
   }
 
   loadStorage() {
