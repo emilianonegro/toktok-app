@@ -40,4 +40,4 @@ Frontend:
 > - Mongodb: https://www.mongodb.com/
 > - socket.io: https://socket.io/docs/v4/
 > - Angular Material: https://material.angular.io/
-# toktok-app
+# toktokApp
