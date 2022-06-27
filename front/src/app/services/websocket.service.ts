@@ -104,7 +104,7 @@ export class WebsocketService {
         color: '#fff',
         background: '#555555',
         backdrop: `
-          rgba(0,0,123,0.4)
+          rgba(123,31,162,0.08)
         `,
       });
     });

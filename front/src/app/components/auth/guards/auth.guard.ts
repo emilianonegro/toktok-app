@@ -7,24 +7,29 @@ import { AuthService } from '../../../services/auth.service';
   providedIn: 'root',
 })
 export class ValidateTokenGuard implements CanActivate, CanLoad {
-  public isLocalstorage: boolean = false;
+  public isLocalstorage!: boolean;
+  public userLocalStorage;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.userLocalStorage = localStorage.getItem('user');
+  }
 
   canActivate(): Observable<boolean> | boolean {
     console.log('canActivate');
-    if (localStorage.getItem('user') == '') {
+    if (this.userLocalStorage == '') {
+      this.router.navigateByUrl('');
       this.isLocalstorage = true;
     }
 
-    return this.isLocalstorage;
+    return true;
   }
   canLoad(): Observable<boolean> | boolean {
     console.log('canLoad');
-    if (localStorage.getItem('user') == '') {
+    if (this.userLocalStorage == '') {
+      this.router.navigateByUrl('');
       this.isLocalstorage = true;
     }
 
-    return this.isLocalstorage;
+    return true;
   }
 }

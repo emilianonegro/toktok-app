@@ -8,7 +8,6 @@ export const createUser = async (req: Request, res: Response) => {
   let rol = "";
   if (email == "xenialab@ingogroup.com") {
     rol = "admin";
-    console.log(rol);
   } else {
     rol = "user";
   }

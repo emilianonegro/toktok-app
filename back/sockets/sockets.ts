@@ -34,10 +34,8 @@ export const newMessage = (client: Socket, io: socketIO.Server) => {
 
 export const newRoomShow = (client: Socket, io: socketIO.Server) => {
   client.on("newRoom", data => {
-    console.log(data);
     if (data.email === "xenialab@ingogroup.com") {
       const name = data.name;
-      console.log(name);
       const room = new RoomModel({
         _id: new mongoose.Types.ObjectId(),
         name,
@@ -48,7 +46,6 @@ export const newRoomShow = (client: Socket, io: socketIO.Server) => {
 
       client.broadcast.emit("roomCreated", room);
       client.emit("roomCreated", room);
-      console.log(room);
     } else {
       console.log("you don't have permission to create a new room");
       let msg = "you don't have permission to create a new room";
@@ -76,7 +73,6 @@ export const deleteRoom = (client: Socket, io: socketIO.Server) => {
     let roomId = data.roomId;
     RoomModel.findByIdAndDelete(roomId).then((room: any) => {
       room;
-      console.log(room);
     });
     RoomModel.find().then(rooms => {
       client.broadcast.emit("allRoomsSended", rooms);

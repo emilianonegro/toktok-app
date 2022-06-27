@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RoomChatComponent } from './components/room/room-chat/room-chat.component';
 import { RegisterComponent } from './components/auth/pages/register/register.component';
+import { ValidateTokenGuard } from './components/auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,22 +20,28 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [ValidateTokenGuard],
+    canLoad: [ValidateTokenGuard],
   },
   {
     path: `home/room-chat/:id`,
     component: RoomChatComponent,
+    canActivate: [ValidateTokenGuard],
+    canLoad: [ValidateTokenGuard],
   },
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [ValidateTokenGuard],
+    canLoad: [ValidateTokenGuard],
   },
   {
     path: '404',
     component: ErrorPageComponent,
   },
   {
-    path: '**',
-    redirectTo: 'home',
+    path: '',
+    redirectTo: 'login',
   },
 ];
 
