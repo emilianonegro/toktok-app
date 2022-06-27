@@ -27,7 +27,6 @@ export class LoginComponent {
     }
 
     this.authService.login(this.email, this.password).subscribe((ok) => {
-      // console.log(resp)
       if (ok === true) {
         console.log('user exist');
         this.router.navigateByUrl('/home');
@@ -37,6 +36,8 @@ export class LoginComponent {
         console.log('Error', ok, 'error');
       }
     });
+
+    this.wsService.sabeStorageEmail(this.email);
 
     this.wsService.loginWS(this.name);
     // this.router.navigate(['./home']);

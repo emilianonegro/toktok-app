@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoomService } from '../room.services';
+import { RoomService } from '../../../services/room.service';
 import { WebsocketService } from '../../../services/websocket.service';
 
 @Component({
@@ -31,14 +31,13 @@ export class InputChangeComponent implements OnInit {
 
   updateRoom(i: number) {
     if (this.newName.name.trim().length === 0) return;
-
+    let email = JSON.parse(localStorage.getItem('email')!);
     let payload = {
       name: `${this.newName.name}`,
       roomId: this.roomIdInput,
+      email,
     };
-    this.rooms[i].name = this.newName.name;
     this.wsService.updateNameRoom(payload);
-
     this.newName.name = '';
   }
 }

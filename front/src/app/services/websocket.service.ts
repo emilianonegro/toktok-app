@@ -1,9 +1,11 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { Room } from '../models/room';
 import { User } from '../models/usuario';
+import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -11,15 +13,16 @@ import { User } from '../models/usuario';
 export class WebsocketService {
   public user!: User;
   public room!: Room;
-  callback: EventEmitter<any> = new EventEmitter();
+  callback$: Subject<any> = new Subject();
 
   constructor(private socket: Socket, private router: Router) {
     this.loadStorage();
     this.listenNewRoom();
+    this.errorMessage();
   }
 
-  emit(event: string, payload?: any, callback?: Function) {
-    this.socket.emit(event, payload, callback);
+  emit(event: string, payload?: {}, callback$?: Function) {
+    this.socket.emit(event, payload, callback$);
   }
 
   sabeStorage() {
@@ -36,6 +39,10 @@ export class WebsocketService {
     this.user = User;
     localStorage.removeItem('user');
     localStorage.clear();
+  }
+
+  sabeStorageEmail(email: string) {
+    localStorage.setItem('email', JSON.stringify(email));
   }
 
   loadStorage() {
@@ -71,23 +78,37 @@ export class WebsocketService {
   }
 
   emitEvent = (payload: any) => {
-    console.log('alsdadasd');
     this.socket.emit('newRoom', payload);
   };
 
   listenNewRoom() {
     this.socket.on('roomCreated', (res: any) => {
-      this.callback.emit(res);
+      this.callback$.next(res);
     });
   }
   emitDeletingRoom = (payload: any) => {
     this.socket.emit('deleteRoom', payload);
-    console.log(payload);
   };
 
   getAllRoomsSocket = () => {
     this.socket.emit('getAllRooms');
   };
+
+  errorMessage() {
+    this.socket.on('errorMessage', (res: any) => {
+      console.log(res);
+      Swal.fire({
+        title: res,
+        width: 600,
+        padding: '3em',
+        color: '#fff',
+        background: '#555555',
+        backdrop: `
+          rgba(0,0,123,0.4)
+        `,
+      });
+    });
+  }
 
   allRoomsfroDB = () => {
     let observable = new Observable<{
@@ -96,9 +117,7 @@ export class WebsocketService {
       chat: [];
       usersOnlines: [];
     }>((observer) => {
-      console.log(observer);
       this.socket.on('allRoomsSended', (data: any) => {
-        console.log(data);
         return observer.next(data);
       });
       return () => {
@@ -110,12 +129,10 @@ export class WebsocketService {
   };
 
   updateNameRoom = (payload: any) => {
-    console.log(payload);
     this.socket.emit('updateNameRoom', payload);
   };
 
   getRoomId = (payload: any) => {
-    console.log(payload);
     this.socket.emit('getRoomId', payload);
   };
 
@@ -126,9 +143,7 @@ export class WebsocketService {
       chat: [];
       usersOnlines: [];
     }>((observer) => {
-      console.log(observer);
       this.socket.on('roomSelected', (data: any) => {
-        console.log(data);
         return observer.next(data);
       });
       return () => {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoomService } from '../room.services';
+import { RoomService } from '../../../services/room.service';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
 import { WebsocketService } from '../../../services/websocket.service';
@@ -47,7 +47,7 @@ export class RoomChatComponent implements OnInit, OnDestroy {
 
     this.getRoomdb();
 
-    this.wsService.callback.subscribe((res) => {
+    this.wsService.callback$.subscribe((res) => {
       this.roomService.addNewRoom(res);
       this.roomService.loadRooms();
       this.roomService.loadRoomSelected();

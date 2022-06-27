@@ -1,8 +1,7 @@
-export class User{
+export class User {
+  public name: string;
 
-    public name: string;
-
-    constructor(name:string){
-        this.name = name
-    }
+  constructor(name: string) {
+    this.name = name;
+  }
 }

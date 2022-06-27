@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RoomInterface } from './room.interface';
-import { WebsocketService } from '../../services/websocket.service';
+import { RoomInterface } from '../interfaces/room.interface';
+import { WebsocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class RoomService {
     return [...this._rooms];
   }
   constructor(private wsService: WebsocketService) {
-    this.wsService.callback.subscribe((res) => {
+    this.wsService.callback$.subscribe((res) => {
       this.addNewRoom(res);
       this.loadRooms();
     });

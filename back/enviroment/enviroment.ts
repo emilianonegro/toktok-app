@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const HOSTING_URL = "//localhost:27017";
-const MONGO_URL = `mongodb:${HOSTING_URL}/tokTok`;
+const MONGO_URL = `mongodb:${HOSTING_URL}/toktok`;
 
 const SECRET_JWT_SEED = "EstOdeb3DeSERCompLic4d02080";
 

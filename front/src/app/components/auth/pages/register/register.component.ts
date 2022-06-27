@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
+import { WebsocketService } from '../../../../services/websocket.service';
 
 @Component({
   selector: 'app-register',
@@ -18,20 +19,22 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private wsService: WebsocketService
   ) {}
 
   register() {
-    console.log(this.myform.value);
-
     const { name, email, password } = this.myform.value;
 
     this.authService.register(name, email, password).subscribe((ok) => {
       if (ok === true) {
         this.router.navigateByUrl('/home');
+        this.wsService.loginWS(name);
       } else {
         console.log('Error', ok, 'error');
       }
     });
+
+    this.wsService.sabeStorageEmail(email);
   }
 }

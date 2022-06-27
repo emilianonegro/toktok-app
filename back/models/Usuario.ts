@@ -14,6 +14,10 @@ const UserSchema: Schema = new Schema({
     type: String,
     require: true,
   },
+  rol: {
+    type: String,
+    require: true,
+  },
 });
 
 export default mongoose.model("users ", UserSchema);

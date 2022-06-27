@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoomService } from './room.services';
+import { RoomService } from '../../services/room.service';
 import { Observable } from 'rxjs';
 import { WebsocketService } from '../../services/websocket.service';
 
