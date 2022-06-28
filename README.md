@@ -1,6 +1,6 @@
 ## TokTok App
 
-*Application where you can exchange messages with other users in different rooms!*
+_Application where you can exchange messages with other users in different rooms!_
 
 **Will need:**
 
@@ -14,11 +14,11 @@
 
 **Ports we use in the project:**
 
-- Port Node.js:        **3000**
+- Port Node.js: **3000**
 
-- Port mongodb:    **mongodb://localhost:27017/tokTok**
+- Port mongodb: **mongodb://localhost:27017/tokTok**
 
-- Port Angular:        **http://localhost:4200**
+- Port Angular: **http://localhost:4200**
 
 ---
 
@@ -26,7 +26,7 @@
 
 Backend:
 
-`npm install`  # to install all dependecies
+`npm install` # to install all dependecies
 
 `npm run dev` # to raise development environment
 
@@ -38,7 +38,7 @@ Frontend:
 
 ---
 
-:zap:   *To learn more about this Technologies, take a look at the following resources:*  :zap:
+:zap: _To learn more about this Technologies, take a look at the following resources:_ :zap:
 
 - Angular: <https://angular.io/docs>
 

@@ -19,15 +19,18 @@ export class RoomChatComponent implements OnInit, OnDestroy {
     chat: '',
   };
 
-  messageText: string = '';
-  messagesSubscription: Subscription | undefined;
-  messagesChat: any[] = [];
-  messageArray: Array<{ user: String; message: String }> = [];
-  onlineUsers: Array<{ user: String }> = [];
+  public messageText: string = '';
+  public messagesSubscription: Subscription | undefined;
+  public messagesChat: any[] = [];
+  public messageArray: Array<{ user: String; message: String }> = [];
+  public onlineUsers: Array<{ user: String }> = [];
 
-  roomName: any;
+  public roomName: any;
   @Output() usersOnline: string[] | any;
-  roomIdNew = this.router.url.substring(16);
+
+  public roomIdNew: string = '';
+
+  // public roomIdNew:string = this.router.url.substring(16);
 
   get rooms() {
     return this.roomService.rooms;
@@ -43,26 +46,28 @@ export class RoomChatComponent implements OnInit, OnDestroy {
       this.messageArray.push(data);
     });
 
-    this.loadOldMessages();
-
-    this.getRoomdb();
-
-    this.wsService.callback$.subscribe((res) => {
-      this.roomService.addNewRoom(res);
-      this.roomService.loadRooms();
-      this.roomService.loadRoomSelected();
-    });
+    // this.wsService.callback$.subscribe((res) => {
+    //   this.roomService.addNewRoom(res);
+    //   this.roomService.loadRooms();
+    //   this.roomService.loadRoomSelected();
+    // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.roomService.recivedRoomId().subscribe((data) => {
+      this.roomIdNew = data;
+      this.getRoomdb(this.roomIdNew);
+      this.loadOldMessages(this.roomIdNew);
+    });
+  }
 
   ngOnDestroy(): void {
     this.messagesSubscription?.unsubscribe();
   }
 
-  leaveRoom() {
-    this.router.navigate(['/home']);
-  }
+  // leaveRoom() {
+  //   this.router.navigate(['/home']);
+  // }
 
   sendMessage() {
     let payload = {
@@ -80,17 +85,21 @@ export class RoomChatComponent implements OnInit, OnDestroy {
     this.messageText = '';
   }
 
-  getRoomdb() {
-    this._api.getRoom(`/${this.roomIdNew}`).subscribe((res: any) => {
-      this.roomName = res.rooms.name;
-    });
+  getRoomdb(roomIdNew: string) {
+    if (roomIdNew != '') {
+      this._api.getRoom(`${this.roomIdNew}`).subscribe((res: any) => {
+        this.roomName = res.rooms.name;
+      });
+    }
   }
 
-  loadOldMessages() {
-    this._api
-      .getOldMessages(`/chatGetMessage/${this.roomIdNew}`)
-      .subscribe((res: any) => {
-        this.messageArray = res.chat;
-      });
+  loadOldMessages(roomIdNew: string) {
+    if (roomIdNew != '') {
+      this._api
+        .getOldMessages(`chatGetMessage/${this.roomIdNew}`)
+        .subscribe((res: any) => {
+          this.messageArray = res.chat;
+        });
+    }
   }
 }

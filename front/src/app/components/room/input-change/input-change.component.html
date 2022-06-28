@@ -4,8 +4,8 @@
   fxLayout="column"
   *ngIf="route == '/admin'"
 >
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>New name</mat-label>
+  <mat-form-field appearance="fill">
+    <mat-label>New name + Enter</mat-label>
     <input
       id="{{ roomIdInput }}"
       matInput
@@ -13,7 +13,4 @@
       [(ngModel)]="newName.name"
     />
   </mat-form-field>
-  <button id="btnAddRoom" type="submit" mat-raised-button color="primary">
-    Change room name
-  </button>
 </form>

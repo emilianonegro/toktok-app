@@ -1,0 +1,10 @@
+.newRoomContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+#btnAddRoom {
+  /* margin: auto; */
+  width: fit-content;
+  height: fit-content;
+}

@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { AuthResponse, Usuario } from '../interfaces/auth.interfaces';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+export const JWT_NAME = 'token';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +18,7 @@ export class AuthService {
   get usuario() {
     return { ...this._usuario };
   }
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   register(name: string, email: string, password: string) {
     const url = `${this.baseUrl}api/auth/new`;
@@ -24,7 +27,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(url, body).pipe(
       tap((resp) => {
         if (resp.ok) {
-          localStorage.setItem('token', resp.token!);
+          localStorage.setItem(JWT_NAME, resp.token!);
           this._usuario = {
             name: resp.name!,
             uid: resp.uid!,
@@ -44,7 +47,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(url, body).pipe(
       tap((resp) => {
         if (resp.ok) {
-          localStorage.setItem('token', resp.token!);
+          localStorage.setItem(JWT_NAME, resp.token!);
           this._usuario = {
             name: resp.name!,
             uid: resp.uid!,
@@ -61,12 +64,12 @@ export class AuthService {
     const url = `${this.baseUrl}api/auth/renew`;
     const headers = new HttpHeaders().set(
       'x-token',
-      localStorage.getItem('token') || ''
+      localStorage.getItem(JWT_NAME) || ''
     );
 
     return this.http.get<AuthResponse>(url, { headers: headers }).pipe(
       map((resp) => {
-        localStorage.setItem('token', resp.token!);
+        localStorage.setItem(JWT_NAME, resp.token!);
         this._usuario = {
           name: resp.name!,
           uid: resp.uid!,
@@ -81,5 +84,10 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
+  }
+
+  isAuthenticated(): boolean {
+    const token: string = localStorage.getItem(JWT_NAME)!;
+    return !this.jwtHelper.isTokenExpired(token);
   }
 }

@@ -29,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 const config: SocketIoConfig = {
   url: 'http://localhost:3000/',
@@ -69,7 +70,10 @@ const config: SocketIoConfig = {
     ReactiveFormsModule,
     SocketIoModule.forRoot(config),
   ],
-  providers: [],
+  providers: [
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

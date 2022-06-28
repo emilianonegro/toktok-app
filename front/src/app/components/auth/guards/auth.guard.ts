@@ -1,35 +1,20 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ValidateTokenGuard implements CanActivate, CanLoad {
-  public isLocalstorage!: boolean;
-  public userLocalStorage;
-
-  constructor(private authService: AuthService, private router: Router) {
-    this.userLocalStorage = localStorage.getItem('user');
-  }
+export class ValidateTokenGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> | boolean {
-    console.log('canActivate');
-    if (this.userLocalStorage == '') {
-      this.router.navigateByUrl('');
-      this.isLocalstorage = true;
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      console.log(this.authService.isAuthenticated());
+      return false;
     }
-
-    return true;
-  }
-  canLoad(): Observable<boolean> | boolean {
-    console.log('canLoad');
-    if (this.userLocalStorage == '') {
-      this.router.navigateByUrl('');
-      this.isLocalstorage = true;
-    }
-
     return true;
   }
 }

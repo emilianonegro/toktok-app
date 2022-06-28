@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../../services/room.service';
-import { Observable } from 'rxjs';
 import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
@@ -14,10 +13,7 @@ export class RoomComponent implements OnInit {
   userOnline = this.wsService.user?.name;
 
   public currentUser: any = 'prueba';
-  public selectedUser: any;
   public roomId: number | any;
-
-  usersActivesObs: Observable<any> | any;
 
   newName = {
     name: '',
@@ -50,6 +46,7 @@ export class RoomComponent implements OnInit {
     this.wsService.joinRoom(payload);
     let payload2 = { roomId: roomId, user: this.userOnline };
     this.wsService.getRoomId(payload2);
+    this.roomService.sendRoomId(roomId);
   }
 
   statusInputFunc(roomId: number) {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { RoomInterface } from '../interfaces/room.interface';
 import { WebsocketService } from './websocket.service';
 
@@ -8,6 +9,8 @@ import { WebsocketService } from './websocket.service';
 export class RoomService {
   private _rooms: RoomInterface[] = [];
 
+  private subject = new Subject<string>();
+
   get rooms(): RoomInterface[] {
     return [...this._rooms];
   }
@@ -16,6 +19,14 @@ export class RoomService {
       this.addNewRoom(res);
       this.loadRooms();
     });
+  }
+
+  sendRoomId(roomId: string) {
+    this.subject.next(roomId);
+  }
+
+  recivedRoomId(): Observable<string> {
+    return this.subject.asObservable();
   }
 
   addNewRoom(room: RoomInterface) {

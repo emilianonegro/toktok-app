@@ -1,9 +1,23 @@
-.container{
-    margin: 10px;
+.container {
+  margin: 10px;
 }
 
-app-room{
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: auto;
+/* app-room {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+} */
+
+.homeContainer {
+  display: flex;
+  margin-top: 25px;
+}
+
+.containerRoom {
+  width: 40%;
+  margin-left: 25px;
+}
+
+.containerChatRoom {
+  width: 60%;
 }

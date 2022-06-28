@@ -21,19 +21,16 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     canActivate: [ValidateTokenGuard],
-    canLoad: [ValidateTokenGuard],
   },
   {
     path: `home/room-chat/:id`,
     component: RoomChatComponent,
     canActivate: [ValidateTokenGuard],
-    canLoad: [ValidateTokenGuard],
   },
   {
     path: 'admin',
     component: AdminComponent,
     canActivate: [ValidateTokenGuard],
-    canLoad: [ValidateTokenGuard],
   },
   {
     path: '404',

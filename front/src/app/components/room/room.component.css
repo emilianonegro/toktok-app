@@ -1,4 +1,4 @@
-.roomContainer {
+/* .roomContainer {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -16,6 +16,57 @@ mat-card-title {
 
 mat-card-actions {
   margin-top: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(227, 227, 227);
+  letter-spacing: 1px;
+} */
+
+.roomContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+mat-card {
+  display: flex;
+  width: 350px;
+  flex-direction: column;
+  padding: 10px;
+  margin: auto;
+  justify-content: space-between;
+}
+mat-card-title {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+}
+
+mat-card-actions {
+  margin-top: 1rem;
+}
+
+.containerAllUsers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 7px;
+}
+
+button {
+  height: fit-content;
+  min-width: 50px;
+  margin-right: 5px;
+}
+.deleteButton {
+  margin-bottom: 7px;
 }
 
 a {
