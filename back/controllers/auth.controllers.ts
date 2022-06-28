@@ -25,7 +25,7 @@ export const createUser = async (req: Request, res: Response) => {
     if (usuario) {
       return res.status(400).json({
         ok: false,
-        msg: "The username already exists with that email",
+        msg: "The email already exists",
       });
     }
 

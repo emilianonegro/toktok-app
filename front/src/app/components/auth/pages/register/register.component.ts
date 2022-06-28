@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { WebsocketService } from '../../../../services/websocket.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,16 @@ export class RegisterComponent {
         this.router.navigateByUrl('/home');
         this.wsService.loginWS(name);
       } else {
-        console.log('Error', ok, 'error');
+        Swal.fire({
+          title: ok,
+          width: 600,
+          padding: '3em',
+          color: '#fff',
+          background: '#555555',
+          backdrop: `
+            rgba(123,31,162,0.08)
+          `,
+        });
       }
     });
 

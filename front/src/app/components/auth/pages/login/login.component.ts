@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../../services/user.service';
 import { WebsocketService } from '../../../../services/websocket.service';
 import { AuthService } from '../../../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -28,12 +29,21 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.password).subscribe((ok) => {
       if (ok === true) {
-        console.log('user exist');
         this.router.navigateByUrl('/home');
       } else {
-        console.log('user dont exist');
+        Swal.fire({
+          title: 'user dont exist',
+          width: 600,
+          padding: '3em',
+          color: '#fff',
+          background: '#555555',
+          backdrop: `
+            rgba(123,31,162,0.08)
+          `,
+        });
+        // console.log('user dont exist');
 
-        console.log('Error', ok, 'error');
+        // console.log('Error', ok, 'error');
       }
     });
 

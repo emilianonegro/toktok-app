@@ -47,9 +47,8 @@ export const newRoomShow = (client: Socket, io: socketIO.Server) => {
       client.broadcast.emit("roomCreated", room);
       client.emit("roomCreated", room);
     } else {
-      console.log("you don't have permission to create a new room");
       let msg = "you don't have permission to create a new room";
-      // client.broadcast.emit("errorMessage", msg);
+      console.log(msg);
       client.emit("errorMessage", msg);
     }
   });
@@ -62,8 +61,7 @@ export const userJoin = (client: Socket, io: socketIO.Server) => {
     if (data.user != undefined) {
       usuariosOnline.push(data);
     }
-    client.to(data.room).emit("newUserJoined", usuariosOnline); //this is not in the other toktok
-
+    client.to(data.room).emit("newUserJoined", usuariosOnline);
     client.data.user = data;
   });
 };
@@ -94,19 +92,16 @@ export const updateNameRoom = (client: Socket, io: socketIO.Server) => {
     const roomId = data.roomId;
     const name = data.name;
     if (data.email === "xenialab@ingogroup.com") {
-      console.log(data, "change room name");
       RoomModel.findByIdAndUpdate(roomId, { name: name }).then((room: any) => {
         room;
-        console.log(room, "info room");
       });
       RoomModel.find().then(rooms => {
         client.broadcast.emit("allRoomsSended", rooms);
         client.emit("allRoomsSended", rooms);
       });
     } else {
-      console.log("you don't have permission to rename the room");
       let msg = "you don't have permission to rename the room";
-      // client.broadcast.emit("errorMessage", msg);
+      console.log(msg);
       client.emit("errorMessage", msg);
     }
   });
@@ -116,7 +111,6 @@ export const getRoomId = (client: Socket, io: socketIO.Server) => {
   client.on("getRoomId", data => {
     let roomId = data.roomId;
     console.log(data, "data go in room");
-
     RoomModel.findById(roomId).then((room: any) => {
       room;
       console.log(room, "room go in room");
