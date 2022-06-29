@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent {
   email: string = '';
-  name: string = '';
+  // name: string = '';
   password: string = '';
 
   constructor(
@@ -41,15 +41,9 @@ export class LoginComponent {
             rgba(123,31,162,0.08)
           `,
         });
-        // console.log('user dont exist');
-
-        // console.log('Error', ok, 'error');
       }
     });
 
-    this.wsService.sabeStorageEmail(this.email);
-
-    this.wsService.loginWS(this.name);
-    // this.router.navigate(['./home']);
+    // this.wsService.loginWS(this.name);
   }
 }

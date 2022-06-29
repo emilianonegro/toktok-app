@@ -131,3 +131,9 @@ input {
   border-radius: 10px;
   object-fit: cover;
 }
+
+@media (max-width: 480px) {
+  .containerChooseRoom {
+    margin-top: 15px;
+  }
+}

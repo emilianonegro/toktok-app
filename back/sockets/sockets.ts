@@ -34,23 +34,17 @@ export const newMessage = (client: Socket, io: socketIO.Server) => {
 
 export const newRoomShow = (client: Socket, io: socketIO.Server) => {
   client.on("newRoom", data => {
-    if (data.email === "xenialab@ingogroup.com") {
-      const name = data.name;
-      const room = new RoomModel({
-        _id: new mongoose.Types.ObjectId(),
-        name,
-        chat: [],
-        usersOnline: [],
-      });
-      room.save();
+    const name = data.name;
+    const room = new RoomModel({
+      _id: new mongoose.Types.ObjectId(),
+      name,
+      chat: [],
+      usersOnline: [],
+    });
+    room.save();
 
-      client.broadcast.emit("roomCreated", room);
-      client.emit("roomCreated", room);
-    } else {
-      let msg = "you don't have permission to create a new room";
-      console.log(msg);
-      client.emit("errorMessage", msg);
-    }
+    client.broadcast.emit("roomCreated", room);
+    client.emit("roomCreated", room);
   });
 };
 
@@ -91,19 +85,13 @@ export const updateNameRoom = (client: Socket, io: socketIO.Server) => {
   client.on("updateNameRoom", data => {
     const roomId = data.roomId;
     const name = data.name;
-    if (data.email === "xenialab@ingogroup.com") {
-      RoomModel.findByIdAndUpdate(roomId, { name: name }).then((room: any) => {
-        room;
-      });
-      RoomModel.find().then(rooms => {
-        client.broadcast.emit("allRoomsSended", rooms);
-        client.emit("allRoomsSended", rooms);
-      });
-    } else {
-      let msg = "you don't have permission to rename the room";
-      console.log(msg);
-      client.emit("errorMessage", msg);
-    }
+    RoomModel.findByIdAndUpdate(roomId, { name: name }).then((room: any) => {
+      room;
+    });
+    RoomModel.find().then(rooms => {
+      client.broadcast.emit("allRoomsSended", rooms);
+      client.emit("allRoomsSended", rooms);
+    });
   });
 };
 

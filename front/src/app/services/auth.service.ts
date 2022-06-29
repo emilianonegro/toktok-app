@@ -92,10 +92,20 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    const email: string = localStorage.getItem('email')!;
-    let isAdmin: boolean;
-    if (email === '"xenialab@ingogroup.com"') return (isAdmin = true);
+    const token: string = localStorage.getItem(JWT_NAME)!;
 
+    console.log(this.jwtHelper.decodeToken(token));
+    const { rol } = this.jwtHelper.decodeToken(token);
+    let isAdmin: boolean;
+    if (rol === 'admin') return (isAdmin = true);
     return isAdmin!;
+  }
+
+  userName(): string {
+    const token: string = localStorage.getItem(JWT_NAME)!;
+    console.log(this.jwtHelper.decodeToken(token));
+    const { name } = this.jwtHelper.decodeToken(token);
+    let userName: string = name;
+    return userName;
   }
 }

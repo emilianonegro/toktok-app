@@ -3,14 +3,8 @@
     <h5>TokTok</h5>
   </button>
   <span class="spacer"></span>
-  <span class="userName">{{ wsService.user?.name }}</span>
-  <button
-    mat-button
-    (click)="goToAdmin()"
-    *ngIf="wsService.user?.name == 'xenialab'"
-  >
-    Admin
-  </button>
+  <span class="userName">{{ userName }}</span>
+  <button mat-button (click)="goToAdmin()" *ngIf="isAdmin">Admin</button>
   <button mat-button (click)="backToHome()">Rooms</button>
   <button mat-button (click)="logOut()">LogOut</button>
 </mat-toolbar>

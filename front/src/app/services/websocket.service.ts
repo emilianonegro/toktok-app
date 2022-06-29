@@ -6,6 +6,7 @@ import { Room } from '../models/room';
 import { User } from '../models/usuario';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,11 @@ export class WebsocketService {
   public room!: Room;
   callback$: Subject<any> = new Subject();
 
-  constructor(private socket: Socket, private router: Router) {
+  constructor(
+    private socket: Socket,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loadStorage();
     this.listenNewRoom();
     this.errorMessage();
@@ -31,8 +36,7 @@ export class WebsocketService {
 
   loginWS(name: string) {
     this.emit('configUser', { name }, (resp: any) => {});
-    this.user = new User(name);
-    this.sabeStorage();
+    this.user = new User(this.authService.userName());
   }
 
   logoutWS() {
@@ -46,10 +50,10 @@ export class WebsocketService {
   }
 
   loadStorage() {
-    if (localStorage.getItem('user')) {
-      this.user = JSON.parse(localStorage.getItem('user')!);
-      this.loginWS(this.user.name);
-    }
+    // if (localStorage.getItem('user')) {
+    //   this.user = JSON.parse(localStorage.getItem('user')!);
+    //   this.loginWS(this.user.name);
+    // }
   }
 
   getUser() {

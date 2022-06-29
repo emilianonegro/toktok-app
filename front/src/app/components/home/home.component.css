@@ -2,12 +2,6 @@
   margin: 10px;
 }
 
-/* app-room {
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: auto;
-} */
-
 .homeContainer {
   display: flex;
   margin-top: 25px;
@@ -20,4 +14,10 @@
 
 .containerChatRoom {
   width: 60%;
+}
+
+@media (max-width: 480px) {
+  .homeContainer {
+    flex-direction: column;
+  }
 }
