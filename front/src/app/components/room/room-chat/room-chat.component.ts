@@ -4,6 +4,7 @@ import { RoomService } from '../../../services/room.service';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
 import { WebsocketService } from '../../../services/websocket.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-room-chat',
@@ -11,25 +12,12 @@ import { WebsocketService } from '../../../services/websocket.service';
   styleUrls: ['./room-chat.component.css'],
 })
 export class RoomChatComponent implements OnInit, OnDestroy {
-  room: any;
-  local = localStorage.getItem('user');
-  userOnline = this.wsService.user?.name;
-
-  chat: any = {
-    chat: '',
-  };
-
   public messageText: string = '';
   public messagesSubscription: Subscription | undefined;
-  public messagesChat: any[] = [];
   public messageArray: Array<{ user: String; message: String }> = [];
-  public onlineUsers: Array<{ user: String }> = [];
-
   public roomName: any;
-  @Output() usersOnline: string[] | any;
-
   public roomIdNew: string = '';
-
+  public userJWT!: string;
   // public roomIdNew:string = this.router.url.substring(16);
 
   get rooms() {
@@ -37,20 +25,15 @@ export class RoomChatComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private _api: ApiService,
     private roomService: RoomService,
-    public wsService: WebsocketService
+    public wsService: WebsocketService,
+    public authService: AuthService
   ) {
     this.wsService.newMessageRecived().subscribe((data) => {
       this.messageArray.push(data);
     });
-
-    // this.wsService.callback$.subscribe((res) => {
-    //   this.roomService.addNewRoom(res);
-    //   this.roomService.loadRooms();
-    //   this.roomService.loadRoomSelected();
-    // });
   }
 
   ngOnInit(): void {
@@ -59,27 +42,25 @@ export class RoomChatComponent implements OnInit, OnDestroy {
       this.getRoomdb(this.roomIdNew);
       this.loadOldMessages(this.roomIdNew);
     });
+
+    this.userJWT = this.authService.userName();
   }
 
   ngOnDestroy(): void {
     this.messagesSubscription?.unsubscribe();
   }
 
-  // leaveRoom() {
-  //   this.router.navigate(['/home']);
-  // }
-
   sendMessage() {
     let payload = {
       message: this.messageText,
-      user: this.userOnline,
+      user: this.authService.userName(),
       room: this.roomIdNew,
     };
 
     this.wsService.sendMessage(payload);
     this.messageArray.push({
       message: this.messageText,
-      user: this.userOnline,
+      user: this.authService.userName(),
     });
 
     this.messageText = '';

@@ -1,14 +1,9 @@
-<!-- <app-nav-bar></app-nav-bar> -->
-
 <div
   fxLayout="row"
   fxLayoutAlign="center center"
   class="roomChatContainer"
   *ngIf="roomName; else noRoomChoose"
 >
-  <!-- <div>
-    <app-users-online usersOnline="usersOnline"></app-users-online>
-  </div> -->
   <div class="cardChat" fxLayoutAlign="center">
     <mat-card fxLayout="column">
       <div
@@ -17,9 +12,6 @@
         id="containerTitle"
       >
         <mat-card-title>{{ roomName }}</mat-card-title>
-        <!-- <button mat-icon-button (click)="leaveRoom()" color="warn">
-          <mat-icon>close</mat-icon>
-        </button> -->
       </div>
       <mat-card-content
         fxLayout="column"
@@ -30,8 +22,8 @@
           *ngFor="let msg of messageArray"
           class="message"
           [ngClass]="{
-            'message-from-me': msg.user === userOnline,
-            'message-from-other': msg.user !== userOnline
+            'message-from-me': msg.user === userJWT,
+            'message-from-other': msg.user !== userJWT
           }"
         >
           <span class="message-sender-name">
