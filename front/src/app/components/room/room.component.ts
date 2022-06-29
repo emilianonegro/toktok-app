@@ -12,14 +12,12 @@ export class RoomComponent implements OnInit {
   route = this.router.url || false;
   userOnline = this.wsService.user?.name;
 
-  public currentUser: any = 'prueba';
-  public roomId: number | any;
+  public roomId!: number;
 
   newName = {
     name: '',
   };
-  roomIdInput: number | any;
-
+  roomIdInput!: number;
   statusInput: boolean = true;
 
   get rooms() {
@@ -37,11 +35,12 @@ export class RoomComponent implements OnInit {
     this.wsService.getAllRoomsSocket();
   }
 
-  deleteRoom(roomIds: string, i: number) {
-    this.roomService.deleteRoom(roomIds, i);
+  deleteRoom(roomIds: string) {
+    this.roomService.deleteRoom(roomIds);
   }
 
-  goIn(roomId: any) {
+  goIn(id: number) {
+    let roomId = id.toString();
     let payload = { room: roomId, user: this.userOnline };
     this.wsService.joinRoom(payload);
     let payload2 = { roomId: roomId, user: this.userOnline };

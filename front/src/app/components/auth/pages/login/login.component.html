@@ -1,48 +1,33 @@
-<form class="logInContainer" (ngSubmit)="login()">
-  <h2>Login</h2>
-  <!-- <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Nick Name</mat-label>
-    <input
-      matInput
-      type="text"
-      name="name"
-      [(ngModel)]="name"
-      required
-      required="true"
-    />
-  </mat-form-field> -->
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Email</mat-label>
-    <input
-      matInput
-      type="email"
-      name="email"
-      [(ngModel)]="email"
-      required
-      required="true"
-    />
-  </mat-form-field>
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Password</mat-label>
-    <input
-      matInput
-      type="password"
-      name="password"
-      [(ngModel)]="password"
-      required
-    />
-  </mat-form-field>
-  <button
-    mat-raised-button
-    color="primary"
-    [disabled]="password.trim().length < 6"
-  >
-    Log In
-  </button>
+<form
+  class="container"
+  [formGroup]="myform"
+  autocomplete="off"
+  (ngSubmit)="login()"
+>
+  <div class="logInContainer">
+    <h2>Login</h2>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        required
+        required="true"
+      />
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" required />
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="myform.invalid">
+      Log In
+    </button>
 
-  <div class="conteiner-account">
-    <span> ¿Create new account? </span>
-    <br />
-    <a routerLink="/register">ENTER HERE</a>
+    <div class="conteiner-account">
+      <span> Don't have an account yet? </span>
+      <br />
+      <a routerLink="/register">Register</a>
+    </div>
   </div>
 </form>

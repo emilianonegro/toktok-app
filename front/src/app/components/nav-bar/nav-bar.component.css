@@ -3,3 +3,14 @@
   color: rgb(164, 120, 205);
   cursor: default;
 }
+
+@media (max-width: 440px) {
+  .brand {
+    margin-top: 7px;
+  }
+  mat-toolbar {
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+  }
+}

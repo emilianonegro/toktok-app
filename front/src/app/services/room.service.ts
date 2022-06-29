@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { RoomInterface } from '../interfaces/room.interface';
 import { WebsocketService } from './websocket.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -44,8 +45,22 @@ export class RoomService {
     });
   }
 
-  deleteRoom(id: string, i: number) {
+  deleteRoom(id: string) {
     let payload = { roomId: id };
     this.wsService.emitDeletingRoom(payload);
+  }
+
+  errorMessage(msg: string) {
+    console.log(msg);
+    Swal.fire({
+      title: msg,
+      width: 600,
+      padding: '3em',
+      color: '#fff',
+      background: '#555555',
+      backdrop: `
+          rgba(123,31,162,0.08)
+        `,
+    });
   }
 }

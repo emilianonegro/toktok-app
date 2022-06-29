@@ -21,17 +21,12 @@ export class WebsocketService {
     private router: Router,
     private authService: AuthService
   ) {
-    this.loadStorage();
     this.listenNewRoom();
     this.errorMessage();
   }
 
   emit(event: string, payload?: {}, callback$?: Function) {
     this.socket.emit(event, payload, callback$);
-  }
-
-  sabeStorage() {
-    localStorage.setItem('user', JSON.stringify(this.user));
   }
 
   loginWS(name: string) {
@@ -41,19 +36,7 @@ export class WebsocketService {
 
   logoutWS() {
     this.user = User;
-    localStorage.removeItem('user');
     localStorage.clear();
-  }
-
-  sabeStorageEmail(email: string) {
-    localStorage.setItem('email', JSON.stringify(email));
-  }
-
-  loadStorage() {
-    // if (localStorage.getItem('user')) {
-    //   this.user = JSON.parse(localStorage.getItem('user')!);
-    //   this.loginWS(this.user.name);
-    // }
   }
 
   getUser() {
@@ -136,7 +119,7 @@ export class WebsocketService {
     this.socket.emit('updateNameRoom', payload);
   };
 
-  getRoomId = (payload: any) => {
+  getRoomId = (payload: { roomId: string; user: string }) => {
     this.socket.emit('getRoomId', payload);
   };
 

@@ -1,4 +1,4 @@
-.logInContainer {
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,6 +6,20 @@
   flex-direction: column;
   position: fixed;
   width: 100%;
+}
+
+.logInContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px #333 solid;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: rgba(51, 51, 51, 0.164);
+}
+
+.logInContainer > h2 {
+  color: rgb(164, 120, 205);
 }
 
 input {
@@ -18,11 +32,11 @@ input {
 }
 
 .conteiner-account > span {
-  color: #000;
+  color: rgb(34, 34, 34);
 }
 
 .conteiner-account > a {
   margin-top: 7px;
-  color: #4e006d;
+  color: rgb(164, 120, 205);
   text-decoration: none;
 }

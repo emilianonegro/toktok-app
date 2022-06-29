@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
 import { WebsocketService } from '../../../../services/websocket.service';
 import { AuthService } from '../../../../services/auth.service';
 import Swal from 'sweetalert2';
+import { RoomService } from '../../../../services/room.service';
 
 @Component({
   selector: 'app-login',
@@ -12,38 +14,33 @@ import Swal from 'sweetalert2';
   providers: [UserService],
 })
 export class LoginComponent {
-  email: string = '';
-  // name: string = '';
-  password: string = '';
+  myform: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  });
 
   constructor(
     private router: Router,
+    private fb: FormBuilder,
     public wsService: WebsocketService,
-    private authService: AuthService
+    private authService: AuthService,
+    private roomService: RoomService
   ) {}
 
   login() {
-    if (this.email.trim().length == 0) {
+    const { name, email, password } = this.myform.value;
+
+    if (email.trim().length == 0) {
       return;
     }
 
-    this.authService.login(this.email, this.password).subscribe((ok) => {
+    this.authService.login(email, password).subscribe((ok) => {
       if (ok === true) {
         this.router.navigateByUrl('/home');
       } else {
-        Swal.fire({
-          title: 'user dont exist',
-          width: 600,
-          padding: '3em',
-          color: '#fff',
-          background: '#555555',
-          backdrop: `
-            rgba(123,31,162,0.08)
-          `,
-        });
+        let msg = 'user dont exist';
+        this.roomService.errorMessage(msg);
       }
     });
-
-    // this.wsService.loginWS(this.name);
   }
 }

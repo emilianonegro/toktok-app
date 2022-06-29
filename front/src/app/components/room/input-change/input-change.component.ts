@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../../../services/room.service';
 import { WebsocketService } from '../../../services/websocket.service';
-import Swal from 'sweetalert2';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -15,8 +14,7 @@ export class InputChangeComponent implements OnInit {
     name: '',
   };
 
-  @Input() roomIdInput: number | any;
-  @Input() i: number | any;
+  @Input() roomIdInput!: number;
 
   route = this.router.url || false;
 
@@ -33,21 +31,13 @@ export class InputChangeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  updateRoom(i: number) {
+  updateRoom() {
     if (this.authService.isAdmin()) {
       if (this.newName.name.trim().length === 0) return;
       if (this.newName.name.trim().length >= 14) {
         this.newName.name = '';
-        Swal.fire({
-          title: 'The new name have to be less than 15 characters',
-          width: 600,
-          padding: '3em',
-          color: '#fff',
-          background: '#555555',
-          backdrop: `
-          rgba(123,31,162,0.08)
-        `,
-        });
+        let msg = 'The new name have to be less than 15 characters';
+        this.roomService.errorMessage(msg);
         return;
       }
 
@@ -58,16 +48,7 @@ export class InputChangeComponent implements OnInit {
       this.wsService.updateNameRoom(payload);
     } else {
       let msg = "you don't have permission to rename the room";
-      Swal.fire({
-        title: msg,
-        width: 600,
-        padding: '3em',
-        color: '#fff',
-        background: '#555555',
-        backdrop: `
-          rgba(123,31,162,0.08)
-        `,
-      });
+      this.roomService.errorMessage(msg);
     }
 
     this.newName.name = '';

@@ -12,11 +12,11 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./room-chat.component.css'],
 })
 export class RoomChatComponent implements OnInit, OnDestroy {
-  public messageText: string = '';
-  public messagesSubscription: Subscription | undefined;
+  public messageText!: string;
+  public messagesSubscription!: Subscription;
   public messageArray: Array<{ user: String; message: String }> = [];
-  public roomName: any;
-  public roomIdNew: string = '';
+  public roomName!: string;
+  public roomIdNew!: string;
   public userJWT!: string;
   // public roomIdNew:string = this.router.url.substring(16);
 

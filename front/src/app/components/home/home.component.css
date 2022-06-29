@@ -16,8 +16,19 @@
   width: 60%;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 840px) {
   .homeContainer {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .containerRoom {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .containerChatRoom {
+    width: 100%;
   }
 }

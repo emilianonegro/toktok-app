@@ -1,57 +1,59 @@
 <form
-  class="logInContainer"
+  class="container"
   autocomplete="off"
   [formGroup]="myform"
   (ngSubmit)="register()"
 >
-  <h2>Register</h2>
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Nick Name</mat-label>
-    <input
-      matInput
-      type="email"
-      formControlName="name"
-      placeholder="Enter your name"
-      required
-      required="true"
-    />
-  </mat-form-field>
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>New email</mat-label>
-    <input
-      matInput
-      type="email"
-      formControlName="email"
-      placeholder="Enter your email"
-      required
-      required="true"
-    />
-  </mat-form-field>
+  <div class="logInContainer">
+    <h2>Register</h2>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Nick Name</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="name"
+        placeholder="Enter your name"
+        required
+        required="true"
+      />
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>New email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="Enter your email"
+        required
+        required="true"
+      />
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>New password</mat-label>
-    <input
-      matInput
-      type="password"
-      formControlName="password"
-      placeholder="Enter your password"
-      required
-      required="true"
-    />
-  </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>New password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="Enter your password"
+        required
+        required="true"
+      />
+    </mat-form-field>
 
-  <button
-    mat-raised-button
-    type="submit"
-    color="primary"
-    [disabled]="myform.invalid"
-  >
-    Create new account
-  </button>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="myform.invalid"
+    >
+      Create new account
+    </button>
 
-  <div class="conteiner-account">
-    <span> ¿Are you already a member? </span>
-    <br />
-    <a routerLink="/login">ENTER HERE</a>
+    <div class="conteiner-account">
+      <span> Already have an account? </span>
+      <br />
+      <a routerLink="/login">Login</a>
+    </div>
   </div>
 </form>

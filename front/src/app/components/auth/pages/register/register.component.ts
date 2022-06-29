@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { WebsocketService } from '../../../../services/websocket.service';
-import Swal from 'sweetalert2';
+import { RoomService } from '../../../../services/room.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +21,8 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private wsService: WebsocketService
+    private wsService: WebsocketService,
+    private roomService: RoomService
   ) {}
 
   register() {
@@ -32,19 +33,8 @@ export class RegisterComponent {
         this.router.navigateByUrl('/home');
         this.wsService.loginWS(name);
       } else {
-        Swal.fire({
-          title: ok,
-          width: 600,
-          padding: '3em',
-          color: '#fff',
-          background: '#555555',
-          backdrop: `
-            rgba(123,31,162,0.08)
-          `,
-        });
+        this.roomService.errorMessage(ok);
       }
     });
-
-    this.wsService.sabeStorageEmail(email);
   }
 }
