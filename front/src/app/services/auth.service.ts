@@ -90,4 +90,12 @@ export class AuthService {
     const token: string = localStorage.getItem(JWT_NAME)!;
     return !this.jwtHelper.isTokenExpired(token);
   }
+
+  isAdmin(): boolean {
+    const email: string = localStorage.getItem('email')!;
+    let isAdmin: boolean;
+    if (email === '"xenialab@ingogroup.com"') return (isAdmin = true);
+
+    return isAdmin!;
+  }
 }

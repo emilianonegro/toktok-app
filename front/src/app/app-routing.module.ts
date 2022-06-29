@@ -6,31 +6,35 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { RoomChatComponent } from './components/room/room-chat/room-chat.component';
 import { RegisterComponent } from './components/auth/pages/register/register.component';
-import { ValidateTokenGuard } from './components/auth/guards/auth.guard';
+import { IsLogin } from './components/auth/guards/auth.guard';
+import { AdminGuard } from './components/admin/guard/admin.guard';
+import { AlreadyAuthGuard } from './components/auth/guards/already-auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AlreadyAuthGuard],
   },
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [AlreadyAuthGuard],
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [ValidateTokenGuard],
+    canActivate: [IsLogin],
   },
   {
     path: `home/room-chat/:id`,
     component: RoomChatComponent,
-    canActivate: [ValidateTokenGuard],
+    canActivate: [IsLogin],
   },
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [ValidateTokenGuard],
+    canActivate: [IsLogin, AdminGuard],
   },
   {
     path: '404',
