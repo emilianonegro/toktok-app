@@ -16,6 +16,10 @@
         required
         required="true"
       />
+
+      <mat-error *ngIf="getErrorMessage('name')"
+        >Name more than 3 characters</mat-error
+      >
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>New email</mat-label>
@@ -27,6 +31,9 @@
         required
         required="true"
       />
+      <mat-error *ngIf="getErrorMessage('email')"
+        >Enter a valid email</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">
@@ -39,6 +46,9 @@
         required
         required="true"
       />
+      <mat-error *ngIf="getErrorMessage('password')"
+        >Password more than 6 characters</mat-error
+      >
     </mat-form-field>
 
     <button

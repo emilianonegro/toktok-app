@@ -15,10 +15,14 @@
         required
         required="true"
       />
+      <mat-error *ngIf="getErrorMessage('email')">Use a valid email</mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Password</mat-label>
       <input matInput type="password" formControlName="password" required />
+      <mat-error *ngIf="getErrorMessage('password')"
+        >Password or User doesn't match</mat-error
+      >
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="myform.invalid">
       Log In

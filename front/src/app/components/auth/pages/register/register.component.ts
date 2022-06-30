@@ -12,7 +12,7 @@ import { RoomService } from '../../../../services/room.service';
 })
 export class RegisterComponent {
   myform: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
@@ -25,16 +25,18 @@ export class RegisterComponent {
     private roomService: RoomService
   ) {}
 
+  getErrorMessage(field: string) {
+    return (
+      this.myform.controls[field].errors && this.myform.controls[field].touched
+    );
+  }
+
   register() {
     const { name, email, password } = this.myform.value;
 
-    this.authService.register(name, email, password).subscribe((ok) => {
-      if (ok === true) {
-        this.router.navigateByUrl('/home');
-        this.wsService.loginWS(name);
-      } else {
-        this.roomService.errorMessage(ok);
-      }
+    this.authService.register(name, email, password).subscribe(() => {
+      this.router.navigateByUrl('/home');
+      this.wsService.loginWS(name);
     });
   }
 }

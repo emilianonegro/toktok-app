@@ -15,7 +15,10 @@ import { RoomService } from '../../../../services/room.service';
 })
 export class LoginComponent {
   myform: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: [
+      '',
+      [Validators.required, Validators.email, Validators.minLength(6)],
+    ],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
@@ -27,20 +30,16 @@ export class LoginComponent {
     private roomService: RoomService
   ) {}
 
+  getErrorMessage(field: string) {
+    return (
+      this.myform.controls[field].errors && this.myform.controls[field].touched
+    );
+  }
+
   login() {
-    const { name, email, password } = this.myform.value;
-
-    if (email.trim().length == 0) {
-      return;
-    }
-
-    this.authService.login(email, password).subscribe((ok) => {
-      if (ok === true) {
-        this.router.navigateByUrl('/home');
-      } else {
-        let msg = 'user dont exist';
-        this.roomService.errorMessage(msg);
-      }
+    const { email, password } = this.myform.value;
+    this.authService.login(email, password).subscribe(() => {
+      this.router.navigateByUrl('/home');
     });
   }
 }
