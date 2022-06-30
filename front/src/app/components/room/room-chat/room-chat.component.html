@@ -57,6 +57,9 @@
       src="https://media.giphy.com/media/eeL8EcBBTwSMLACw6F/giphy.gif"
       alt=""
     />
-    <h2>Choose a Room...</h2>
+    <h2 *ngIf="rooms.length !== 0; else roomsAvaib">Choose a Room...</h2>
+    <ng-template #roomsAvaib>
+      <h2>No rooms for now</h2>
+    </ng-template>
   </div>
 </ng-template>

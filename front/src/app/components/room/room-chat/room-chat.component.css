@@ -131,13 +131,6 @@ input {
 
 @media (max-width: 840px) {
   .containerChooseRoom {
-    margin-top: 15px;
-    width: 370px;
-  }
-}
-
-@media (max-width: 440px) {
-  .containerChooseRoom {
     width: 350px;
     margin-top: 15px;
     margin-bottom: 15px;

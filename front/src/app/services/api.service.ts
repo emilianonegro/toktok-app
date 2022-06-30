@@ -9,10 +9,10 @@ export class ApiService {
   private baseUrl = environment.URL_BACKEND;
 
   constructor(private _http: HttpClient) {}
-  getRoom(url: any) {
+  getRoom(url: string) {
     return this._http.get(`${this.baseUrl}room/${url}`);
   }
-  getOldMessages(url: any) {
+  getOldMessages(url: string) {
     return this._http.get(`${this.baseUrl}room/${url}`);
   }
 }

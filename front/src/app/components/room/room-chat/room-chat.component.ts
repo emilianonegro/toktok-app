@@ -37,6 +37,8 @@ export class RoomChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.rooms);
+
     this.roomService.recivedRoomId().subscribe((data) => {
       this.roomIdNew = data;
       this.getRoomdb(this.roomIdNew);

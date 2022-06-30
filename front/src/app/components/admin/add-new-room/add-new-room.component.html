@@ -6,12 +6,18 @@
 >
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>New Room Name</mat-label>
-    <input matInput name="name" formGroupName="roomName" />
+    <input matInput type="text" formControlName="roomName" />
     <mat-error *ngIf="getErrorMessage('roomName')"
-      >Password more than 6 characters</mat-error
+      >The name have to be between 3 and 14 characters</mat-error
     >
   </mat-form-field>
-  <button id="btnAddRoom" type="submit" mat-raised-button color="primary">
+  <button
+    id="btnAddRoom"
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="myform.invalid"
+  >
     Generate New Room
   </button>
 </form>

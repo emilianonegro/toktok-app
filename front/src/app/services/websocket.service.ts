@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { Room } from '../models/room';
 import { User } from '../models/usuario';
 import { Subject } from 'rxjs';
-import Swal from 'sweetalert2';
-import { AuthService } from './auth.service';
+// import Swal from 'sweetalert2';
+// import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +17,10 @@ export class WebsocketService {
   callback$: Subject<any> = new Subject();
 
   constructor(
-    private socket: Socket,
-    private router: Router,
-    private authService: AuthService
+    private socket: Socket // private router: Router, // private authService: AuthService
   ) {
     this.listenNewRoom();
-    this.errorMessage();
+    // this.errorMessage();
   }
 
   emit(event: string, payload?: {}, callback$?: Function) {
@@ -30,12 +28,12 @@ export class WebsocketService {
   }
 
   loginWS(name: string) {
-    this.emit('configUser', { name }, (resp: any) => {});
-    this.user = new User(this.authService.userName());
+    this.emit('configUser', { name });
+    // this.user = new User(this.authService.userName());
   }
 
   logoutWS() {
-    this.user = User;
+    // this.user = User;
     localStorage.clear();
   }
 
@@ -43,11 +41,11 @@ export class WebsocketService {
     return this.user;
   }
 
-  joinRoom(data: any) {
+  joinRoom(data: Object) {
     this.socket.emit('join', data);
   }
 
-  sendMessage(data: any) {
+  sendMessage(data: Object) {
     this.socket.emit('message', data);
   }
   newMessageRecived() {
@@ -64,40 +62,40 @@ export class WebsocketService {
     return observable;
   }
 
-  emitEvent = (payload: any) => {
+  emitEvent(payload: Object) {
     this.socket.emit('newRoom', payload);
-  };
+  }
 
   listenNewRoom() {
     this.socket.on('roomCreated', (res: any) => {
       this.callback$.next(res);
     });
   }
-  emitDeletingRoom = (payload: any) => {
+  emitDeletingRoom(payload: Object) {
     this.socket.emit('deleteRoom', payload);
-  };
-
-  getAllRoomsSocket = () => {
-    this.socket.emit('getAllRooms');
-  };
-
-  errorMessage() {
-    this.socket.on('errorMessage', (res: any) => {
-      console.log(res);
-      Swal.fire({
-        title: res,
-        width: 600,
-        padding: '3em',
-        color: '#fff',
-        background: '#555555',
-        backdrop: `
-          rgba(123,31,162,0.08)
-        `,
-      });
-    });
   }
 
-  allRoomsfroDB = () => {
+  getAllRoomsSocket() {
+    this.socket.emit('getAllRooms');
+  }
+
+  // errorMessage() {
+  //   this.socket.on('errorMessage', (res: any) => {
+  //     console.log(res);
+  //     Swal.fire({
+  //       title: res,
+  //       width: 600,
+  //       padding: '3em',
+  //       color: '#fff',
+  //       background: '#555555',
+  //       backdrop: `
+  //         rgba(123,31,162,0.08)
+  //       `,
+  //     });
+  //   });
+  // }
+
+  allRoomsfroDB() {
     let observable = new Observable<{
       _id: string;
       name: string;
@@ -113,17 +111,17 @@ export class WebsocketService {
     });
 
     return observable;
-  };
+  }
 
-  updateNameRoom = (payload: any) => {
+  updateNameRoom(payload: any) {
     this.socket.emit('updateNameRoom', payload);
-  };
+  }
 
   getRoomId = (payload: { roomId: string; user: string }) => {
     this.socket.emit('getRoomId', payload);
   };
 
-  getRoomSelectedDB = () => {
+  getRoomSelectedDB() {
     let observable = new Observable<{
       _id: string;
       name: string;
@@ -139,5 +137,5 @@ export class WebsocketService {
     });
 
     return observable;
-  };
+  }
 }

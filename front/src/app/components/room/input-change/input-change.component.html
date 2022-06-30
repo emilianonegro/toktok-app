@@ -2,15 +2,14 @@
   class="newRoomContainer"
   (ngSubmit)="updateRoom()"
   fxLayout="column"
+  [formGroup]="myform"
   *ngIf="route == '/admin'"
 >
   <mat-form-field appearance="fill">
     <mat-label>New name + Enter</mat-label>
-    <input
-      id="{{ roomIdInput }}"
-      matInput
-      name="name"
-      [(ngModel)]="newName.name"
-    />
+    <input id="{{ roomIdInput }}" matInput formControlName="newName" />
+    <mat-error *ngIf="getErrorMessage('newName')">
+      The name have to be between 3 and 14 characters</mat-error
+    >
   </mat-form-field>
 </form>

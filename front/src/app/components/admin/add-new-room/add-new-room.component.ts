@@ -12,7 +12,10 @@ import { RoomService } from '../../../services/room.service';
 })
 export class AddNewRoomComponent implements OnInit {
   myform: FormGroup = this.fb.group({
-    roomName: ['', [Validators.required, Validators.minLength(3)]],
+    roomName: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(14)],
+    ],
   });
   // @Input() newName: RoomInterface = {
   //   _id: 0,
@@ -35,28 +38,18 @@ export class AddNewRoomComponent implements OnInit {
   }
 
   add() {
-    if (this.authService.isAdmin()) {
-      if (this.newName.name.trim().length === 0) return;
-      if (this.newName.name.trim().length >= 14) {
-        this.newName.name = '';
-        let msg = 'The name have to be less than 15 characters';
-        this.roomService.errorMessage(msg);
-
-        return;
-      }
-      let payload = {
-        name: `${this.myform.controls}`,
-      };
-      this.wsService.emitEvent(payload);
-    } else {
-      let msg = "you don't have permission to create a new room";
-      this.roomService.errorMessage(msg);
+    if (this.myform.invalid) {
+      this.myform.markAllAsTouched();
+      return;
     }
 
-    this.newName = {
-      _id: 0,
-      name: '',
-      chat: [],
-    };
+    if (this.authService.isAdmin()) {
+      let payload = {
+        name: `${this.myform.controls['roomName'].value}`,
+      };
+      this.wsService.emitEvent(payload);
+    }
+
+    this.myform.reset();
   }
 }

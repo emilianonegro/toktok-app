@@ -11,7 +11,7 @@ export class UserService {
     return this._usersOnline;
   }
 
-  userOn(userName: any) {
-    this._usersOnline.push(userName);
-  }
+  // userOn(userName: any) {
+  //   this._usersOnline.push(userName);
+  // }
 }
