@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { RoomService } from '../../../services/room.service';
 import { WebsocketService } from '../../../services/websocket.service';
 import { AuthService } from '../../../services/auth.service';
@@ -12,19 +11,15 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./input-change.component.css'],
 })
 export class InputChangeComponent implements OnInit {
-  myform: FormGroup = this.fb.group({
+  public myform: FormGroup = this.fb.group({
     newName: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(14)],
     ],
   });
-  // newName = {
-  //   name: '',
-  // };
+  public route = this.router.url || false;
 
   @Input() roomIdInput!: number;
-
-  route = this.router.url || false;
 
   get rooms() {
     return this.roomService.rooms;

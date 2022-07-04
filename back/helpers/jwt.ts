@@ -8,7 +8,6 @@ export const generateJWT = (
   rol: string
 ) => {
   const payload = { uid, name, email, rol };
-
   return new Promise((resolve, reject) => {
     jwt.sign(
       payload,

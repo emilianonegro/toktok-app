@@ -7,10 +7,34 @@ import mongoose from "mongoose";
 
 export const usersOnline = new UserList();
 
+let usuariosOnline: string[] = [];
+export const userJoin = (client: Socket, io: socketIO.Server) => {
+  client.on("join", data => {
+    client.join(data.room);
+    client.data.user = data;
+  });
+};
+
 export const conectClient = (client: Socket, io: socketIO.Server) => {
   const user = new User(client.id);
   usersOnline.addUser(user);
 };
+
+export const confiUser = (client: Socket, io: socketIO.Server) => {
+  client.on("configUser", (payload: string) => {
+    usersOnline.updateUser(client.id, payload);
+    io.emit("usersActives", usersOnline.getList());
+  });
+};
+
+export const confiUserRoom = (client: Socket, io: socketIO.Server) => {
+  client.on("configUserRoom", (payload: string) => {
+    usersOnline.updateUserRoom(client.id, payload);
+
+    io.emit("usersActivesRoom", usersOnline.getList());
+  });
+};
+
 export const newMessage = (client: Socket, io: socketIO.Server) => {
   client.on("message", data => {
     let chatInfo = { user: data.user, message: data.message };
@@ -43,20 +67,7 @@ export const newRoomShow = (client: Socket, io: socketIO.Server) => {
     });
     room.save();
 
-    client.broadcast.emit("roomCreated", room);
-    client.emit("roomCreated", room);
-  });
-};
-
-let usuariosOnline: [][] = [];
-export const userJoin = (client: Socket, io: socketIO.Server) => {
-  client.on("join", data => {
-    client.join(data.room);
-    if (data.user != undefined) {
-      usuariosOnline.push(data);
-    }
-    client.to(data.room).emit("newUserJoined", usuariosOnline);
-    client.data.user = data;
+    io.emit("roomCreated", room);
   });
 };
 
@@ -95,14 +106,16 @@ export const updateNameRoom = (client: Socket, io: socketIO.Server) => {
   });
 };
 
-export const getRoomId = (client: Socket, io: socketIO.Server) => {
-  client.on("getRoomId", data => {
-    let roomId = data.roomId;
-    console.log(data, "data go in room");
-    RoomModel.findById(roomId).then((room: any) => {
-      room;
-      console.log(room, "room go in room");
-      return client.emit("roomSelected", room);
-    });
+export const getUsersInTheRoom = (client: Socket, io: socketIO.Server) => {
+  client.on("usersInRoom", payload => {
+    const roomId = payload;
+    io.to(roomId).emit("newUsersInRoom", usersOnline.getUsersInRoom(roomId));
+  });
+};
+
+export const disconnected = (client: Socket, io: socketIO.Server) => {
+  client.on("disconnect", () => {
+    usersOnline.deleteUser(client.id);
+    io.emit("usuarios-activos", usersOnline.getList());
   });
 };

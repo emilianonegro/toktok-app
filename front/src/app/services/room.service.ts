@@ -12,6 +12,12 @@ export class RoomService {
 
   private subject = new Subject<string>();
 
+  private _roomId: string = '';
+
+  get roomId(): string {
+    return this._roomId;
+  }
+
   get rooms(): RoomInterface[] {
     return [...this._rooms];
   }
@@ -24,6 +30,7 @@ export class RoomService {
 
   sendRoomId(roomId: string) {
     this.subject.next(roomId);
+    this._roomId = roomId;
   }
 
   recivedRoomId(): Observable<string> {
@@ -39,28 +46,8 @@ export class RoomService {
     });
   }
 
-  loadRoomSelected() {
-    this.wsService.getRoomSelectedDB().subscribe((res: any) => {
-      this._rooms = res;
-    });
-  }
-
   deleteRoom(id: string) {
     let payload = { roomId: id };
     this.wsService.emitDeletingRoom(payload);
-  }
-
-  errorMessage(msg: string) {
-    console.log(msg);
-    Swal.fire({
-      title: msg,
-      width: 600,
-      padding: '3em',
-      color: '#fff',
-      background: '#555555',
-      backdrop: `
-          rgba(123,31,162,0.08)
-        `,
-    });
   }
 }

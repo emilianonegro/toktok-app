@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WebsocketService } from '../../../../services/websocket.service';
 import { AuthService } from '../../../../services/auth.service';
-import Swal from 'sweetalert2';
-import { RoomService } from '../../../../services/room.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +10,7 @@ import { RoomService } from '../../../../services/room.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  myform: FormGroup = this.fb.group({
+  public myform: FormGroup = this.fb.group({
     email: [
       '',
       [Validators.required, Validators.email, Validators.minLength(6)],
@@ -24,8 +22,7 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder,
     public wsService: WebsocketService,
-    private authService: AuthService,
-    private roomService: RoomService
+    private authService: AuthService
   ) {}
 
   getErrorMessage(field: string) {

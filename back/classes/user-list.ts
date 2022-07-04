@@ -17,9 +17,6 @@ export class UserList {
         break;
       }
     }
-
-    console.log("========= Update User ============");
-    console.log(this.list);
   }
 
   public updateUserRoom(id: string, room: string) {
@@ -29,9 +26,6 @@ export class UserList {
         break;
       }
     }
-
-    console.log("!!!!!!!!!!!! Update  !!!!!!!!!!!!");
-    console.log(this.list);
   }
 
   public getList() {

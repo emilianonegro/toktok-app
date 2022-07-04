@@ -1,65 +1,69 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign="center center"
-  class="roomChatContainer"
-  *ngIf="roomName; else noRoomChoose"
->
-  <div fxLayoutAlign="center">
-    <mat-card fxLayout="column">
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-between center"
-        id="containerTitle"
-      >
-        <mat-card-title>{{ roomName }}</mat-card-title>
-      </div>
-      <mat-card-content
-        fxLayout="column"
-        class="chat-messages-show-container"
-        id="message-list"
-      >
-        <li
-          *ngFor="let msg of messageArray"
-          class="message"
-          [ngClass]="{
-            'message-from-me': msg.user === userJWT,
-            'message-from-other': msg.user !== userJWT
-          }"
+<div class="roomChatContainer">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    class="roomChat"
+    *ngIf="roomName; else noRoomChoose"
+  >
+    <div fxLayoutAlign="center">
+      <mat-card fxLayout="column">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          id="containerTitle"
         >
-          <span class="message-sender-name">
-            {{ msg.user }}
-          </span>
-          <span>
-            {{ msg.message }}
-          </span>
-        </li>
-      </mat-card-content>
-      <form class="InputContainer" (ngSubmit)="sendMessage()">
-        <input
-          class="inputChat"
-          matInput
-          type="text"
-          name="messageText"
-          [(ngModel)]="messageText"
-        />
-        <span class="spacer"></span>
-        <button mat-flat-button color="primary" type="submit">
-          <mat-icon>send</mat-icon>
-        </button>
-      </form>
-    </mat-card>
+          <mat-card-title>{{ roomName }}</mat-card-title>
+        </div>
+        <mat-card-content
+          fxLayout="column"
+          class="chat-messages-show-container"
+          id="message-list"
+        >
+          <li
+            *ngFor="let msg of messageArray"
+            class="message"
+            [ngClass]="{
+              'message-from-me': msg.user === userJWT,
+              'message-from-other': msg.user !== userJWT
+            }"
+          >
+            <span class="message-sender-name">
+              {{ msg.user }}
+            </span>
+            <span>
+              {{ msg.message }}
+            </span>
+          </li>
+        </mat-card-content>
+        <form class="InputContainer" (ngSubmit)="sendMessage()">
+          <input
+            class="inputChat"
+            matInput
+            type="text"
+            name="messageText"
+            [(ngModel)]="messageText"
+          />
+          <span class="spacer"></span>
+          <button mat-flat-button color="primary" type="submit">
+            <mat-icon>send</mat-icon>
+          </button>
+        </form>
+      </mat-card>
+    </div>
   </div>
-</div>
 
-<ng-template #noRoomChoose>
-  <div class="containerChooseRoom">
-    <img
-      src="https://media.giphy.com/media/eeL8EcBBTwSMLACw6F/giphy.gif"
-      alt=""
-    />
-    <h2 *ngIf="rooms.length !== 0; else roomsAvaib">Choose a Room...</h2>
-    <ng-template #roomsAvaib>
-      <h2>No rooms for now</h2>
-    </ng-template>
-  </div>
-</ng-template>
+  <ng-template #noRoomChoose>
+    <div class="containerChooseRoom">
+      <img
+        src="https://media.giphy.com/media/eeL8EcBBTwSMLACw6F/giphy.gif"
+        alt=""
+      />
+      <h2 *ngIf="rooms.length !== 0; else roomsAvaib">Choose a Room...</h2>
+      <ng-template #roomsAvaib>
+        <h2>No rooms for now</h2>
+      </ng-template>
+    </div>
+  </ng-template>
+
+  <app-users-online *ngIf="roomName"></app-users-online>
+</div>

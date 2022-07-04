@@ -7,7 +7,7 @@ import { WebsocketService } from './services/websocket.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'tok-tok';
+  public title = 'tok-tok';
 
   constructor(public weService: WebsocketService) {}
 }

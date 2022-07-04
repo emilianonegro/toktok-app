@@ -49,7 +49,7 @@ a {
   letter-spacing: 1px;
 }
 
-@media (max-width: 840px) {
+@media (max-width: 1100px) {
   .mat-card {
     width: 330px;
   }

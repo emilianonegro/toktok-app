@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WebsocketService } from 'src/app/services/websocket.service';
-import { RoomInterface } from '../../../interfaces/room.interface';
 import { AuthService } from '../../../services/auth.service';
-import { RoomService } from '../../../services/room.service';
 
 @Component({
   selector: 'app-add-new-room',
@@ -11,23 +9,17 @@ import { RoomService } from '../../../services/room.service';
   styleUrls: ['./add-new-room.component.css'],
 })
 export class AddNewRoomComponent implements OnInit {
-  myform: FormGroup = this.fb.group({
+  public myform: FormGroup = this.fb.group({
     roomName: [
       '',
       [Validators.required, Validators.minLength(3), Validators.maxLength(14)],
     ],
   });
-  // @Input() newName: RoomInterface = {
-  //   _id: 0,
-  //   name: '',
-  //   chat: [],
-  // };
 
   constructor(
     private fb: FormBuilder,
     private wsService: WebsocketService,
-    private authService: AuthService,
-    private roomService: RoomService
+    private authService: AuthService
   ) {}
   ngOnInit(): void {}
 
@@ -42,14 +34,12 @@ export class AddNewRoomComponent implements OnInit {
       this.myform.markAllAsTouched();
       return;
     }
-
     if (this.authService.isAdmin()) {
       let payload = {
         name: `${this.myform.controls['roomName'].value}`,
       };
       this.wsService.emitEvent(payload);
     }
-
     this.myform.reset();
   }
 }

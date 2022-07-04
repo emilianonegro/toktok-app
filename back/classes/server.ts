@@ -41,7 +41,10 @@ export default class Server {
       socket.deleteRoom(client, this.io);
       socket.getAllRoomsSocket(client, this.io);
       socket.updateNameRoom(client, this.io);
-      socket.getRoomId(client, this.io);
+      socket.confiUser(client, this.io);
+      socket.confiUserRoom(client, this.io);
+      socket.getUsersInTheRoom(client, this.io);
+      socket.disconnected(client, this.io);
     });
   }
 

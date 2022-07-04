@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { RoomService } from '../../../services/room.service';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
@@ -18,14 +17,12 @@ export class RoomChatComponent implements OnInit, OnDestroy {
   public roomName!: string;
   public roomIdNew!: string;
   public userJWT!: string;
-  // public roomIdNew:string = this.router.url.substring(16);
 
   get rooms() {
     return this.roomService.rooms;
   }
 
   constructor(
-    // private router: Router,
     private _api: ApiService,
     private roomService: RoomService,
     public wsService: WebsocketService,
@@ -37,8 +34,6 @@ export class RoomChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.rooms);
-
     this.roomService.recivedRoomId().subscribe((data) => {
       this.roomIdNew = data;
       this.getRoomdb(this.roomIdNew);

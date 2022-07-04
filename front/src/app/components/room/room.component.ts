@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../../services/room.service';
 import { WebsocketService } from '../../services/websocket.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-room',
@@ -9,16 +10,14 @@ import { WebsocketService } from '../../services/websocket.service';
   styleUrls: ['./room.component.css'],
 })
 export class RoomComponent implements OnInit {
-  route = this.router.url || false;
-  userOnline = this.wsService.user?.name;
-
+  public route = this.router.url || false;
+  public userOnline = this.wsService.user?.name;
   public roomId!: number;
-
-  newName = {
+  public newName = {
     name: '',
   };
-  roomIdInput!: number;
-  statusInput: boolean = true;
+  public roomIdInput!: number;
+  public statusInput: boolean = true;
 
   get rooms() {
     return this.roomService.rooms;
@@ -27,7 +26,8 @@ export class RoomComponent implements OnInit {
   constructor(
     private roomService: RoomService,
     private router: Router,
-    private wsService: WebsocketService
+    private wsService: WebsocketService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -41,11 +41,12 @@ export class RoomComponent implements OnInit {
 
   goIn(id: number) {
     let roomId = id.toString();
-    let payload = { room: roomId, user: this.userOnline };
+    let user = this.authService.userName();
+    let payload = { room: roomId, user: user };
     this.wsService.joinRoom(payload);
-    let payload2 = { roomId: roomId, user: this.userOnline };
-    this.wsService.getRoomId(payload2);
     this.roomService.sendRoomId(roomId);
+    this.wsService.confiUser(user);
+    this.wsService.confiUserRoom(roomId);
   }
 
   statusInputFunc(roomId: number) {

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { WebsocketService } from '../../../../services/websocket.service';
-import { RoomService } from '../../../../services/room.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +10,7 @@ import { RoomService } from '../../../../services/room.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  myform: FormGroup = this.fb.group({
+  public myform: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -21,8 +20,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private wsService: WebsocketService,
-    private roomService: RoomService
+    private wsService: WebsocketService
   ) {}
 
   getErrorMessage(field: string) {

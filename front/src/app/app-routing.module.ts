@@ -26,11 +26,6 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [IsLogin],
   },
-  // {
-  //   path: `home/room-chat/:id`,
-  //   component: RoomChatComponent,
-  //   canActivate: [IsLogin],
-  // },
   {
     path: 'admin',
     component: AdminComponent,

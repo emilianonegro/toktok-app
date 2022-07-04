@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable, OnInit } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { Room } from '../models/room';
 import { User } from '../models/usuario';
 import { Subject } from 'rxjs';
-// import Swal from 'sweetalert2';
-// import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WebsocketService {
+export class WebsocketService implements OnInit {
+  public isSocketConnected = false;
   public user!: User;
-  public room!: Room;
-  callback$: Subject<any> = new Subject();
+  public callback$: Subject<any> = new Subject();
 
-  constructor(
-    private socket: Socket // private router: Router, // private authService: AuthService
-  ) {
+  constructor(private socket: Socket) {
     this.listenNewRoom();
-    // this.errorMessage();
+    this.checkStatusSocket();
+  }
+
+  ngOnInit(): void {}
+  listen(evento: string) {
+    return this.socket.fromEvent(evento);
   }
 
   emit(event: string, payload?: {}, callback$?: Function) {
@@ -29,11 +29,9 @@ export class WebsocketService {
 
   loginWS(name: string) {
     this.emit('configUser', { name });
-    // this.user = new User(this.authService.userName());
   }
 
   logoutWS() {
-    // this.user = User;
     localStorage.clear();
   }
 
@@ -79,22 +77,6 @@ export class WebsocketService {
     this.socket.emit('getAllRooms');
   }
 
-  // errorMessage() {
-  //   this.socket.on('errorMessage', (res: any) => {
-  //     console.log(res);
-  //     Swal.fire({
-  //       title: res,
-  //       width: 600,
-  //       padding: '3em',
-  //       color: '#fff',
-  //       background: '#555555',
-  //       backdrop: `
-  //         rgba(123,31,162,0.08)
-  //       `,
-  //     });
-  //   });
-  // }
-
   allRoomsfroDB() {
     let observable = new Observable<{
       _id: string;
@@ -117,25 +99,40 @@ export class WebsocketService {
     this.socket.emit('updateNameRoom', payload);
   }
 
-  getRoomId = (payload: { roomId: string; user: string }) => {
-    this.socket.emit('getRoomId', payload);
-  };
+  confiUser(payload: string) {
+    this.socket.emit('configUser', payload);
+  }
 
-  getRoomSelectedDB() {
-    let observable = new Observable<{
-      _id: string;
-      name: string;
-      chat: [];
-      usersOnlines: [];
-    }>((observer) => {
-      this.socket.on('roomSelected', (data: any) => {
-        return observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      };
-    });
+  confiUserRoom(payload: string) {
+    this.socket.emit('configUserRoom', payload);
+  }
 
+  getUsersInTheRoom(payload: string) {
+    this.socket.emit('usersInRoom', payload);
+  }
+
+  listnUsersInTheRoom() {
+    let observable = new Observable<{ user: string; id: string; room: string }>(
+      (observer) => {
+        this.socket.on('newUsersInRoom', (data: any) => {
+          observer.next(data);
+        });
+        return () => {
+          this.socket.disconnect();
+        };
+      }
+    );
     return observable;
+  }
+
+  getUsuariosActivos() {
+    return this.listen('newUsersInRoom');
+  }
+
+  checkStatusSocket() {
+    this.socket.on('disconnect', () => {
+      console.log('Disconnected from the server');
+      this.isSocketConnected = false;
+    });
   }
 }
