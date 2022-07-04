@@ -18,5 +18,3 @@ server.app.use("/api/auth", router);
 server.start(() => {
   console.log("Servidor corriendo en el puerto " + server.port);
 });
-
-console.log("try develope branch");
