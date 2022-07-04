@@ -11,7 +11,6 @@ server.app.use(bodyParser.json());
 
 //CORS
 server.app.use(cors({ origin: true, credentials: true }));
-
 server.app.use("/room", router);
 server.app.use("/api/auth", router);
 
