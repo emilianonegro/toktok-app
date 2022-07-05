@@ -7,7 +7,6 @@ import mongoose from "mongoose";
 
 export const usersOnline = new UserList();
 
-let usuariosOnline: string[] = [];
 export const userJoin = (client: Socket, io: socketIO.Server) => {
   client.on("join", data => {
     client.join(data.room);
@@ -63,7 +62,6 @@ export const newRoomShow = (client: Socket, io: socketIO.Server) => {
       _id: new mongoose.Types.ObjectId(),
       name,
       chat: [],
-      usersOnline: [],
     });
     room.save();
 
@@ -116,6 +114,6 @@ export const getUsersInTheRoom = (client: Socket, io: socketIO.Server) => {
 export const disconnected = (client: Socket, io: socketIO.Server) => {
   client.on("disconnect", () => {
     usersOnline.deleteUser(client.id);
-    io.emit("usuarios-activos", usersOnline.getList());
+    io.emit("usersActives", usersOnline.getList());
   });
 };
