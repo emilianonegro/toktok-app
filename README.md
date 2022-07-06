@@ -14,7 +14,7 @@ _Application where you can exchange messages with other users in different rooms
 
 To have access to the admin page you have to create an account with this email: `xenialab@ingogroup.com`
 
-Or change it in: back\controllers\auth.controllers.ts, line: 9
+Or change it in: back/controllers/auth.controllers.ts, line: 9
 
 ---
 
@@ -58,8 +58,4 @@ Frontend:
 
 - Angular Material: <https://material.angular.io/>
 
-
-
-
-
-# 
+#
