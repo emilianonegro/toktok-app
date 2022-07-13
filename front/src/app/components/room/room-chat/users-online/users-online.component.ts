@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { WebsocketService } from '../../../../services/websocket.service';
+import { RoomMessageType, WebsocketService } from '../../../../services/websocket.service';
 import { RoomService } from '../../../../services/room.service';
 import { AuthService } from '../../../../services/auth.service';
 
@@ -27,8 +27,14 @@ export class UsersOnlineComponent implements OnInit {
     private roomService: RoomService
   ) {
     this.ownUser = this.authService.userName();
-    this.wsService.listnUsersInTheRoom().subscribe((data) => {
-      this.actives.push(data);
+
+    this.wsService.roomsObservable$.subscribe(data => {
+      switch (data.type) {
+        case RoomMessageType.NewUsersInRoom:
+          this.actives.push(data.data);
+          break;
+     
+      }
     });
   }
 

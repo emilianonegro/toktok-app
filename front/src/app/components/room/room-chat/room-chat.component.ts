@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { RoomService } from '../../../services/room.service';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
-import { WebsocketService } from '../../../services/websocket.service';
+import { RoomMessageType, WebsocketService } from '../../../services/websocket.service';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -28,8 +28,12 @@ export class RoomChatComponent implements OnInit, OnDestroy {
     public wsService: WebsocketService,
     public authService: AuthService
   ) {
-    this.wsService.newMessageRecived().subscribe((data) => {
-      this.messageArray.push(data);
+    this.wsService.newMessageObservable$.subscribe(message => {
+      switch (message.type) {
+        case RoomMessageType.NewMessage:
+          this.messageArray.push( message.data)
+          break;
+      }
     });
   }
 

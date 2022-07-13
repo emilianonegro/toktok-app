@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RoomInterface } from '../interfaces/room.interface';
-import { WebsocketService } from './websocket.service';
-import Swal from 'sweetalert2';
+import { RoomMessageType, WebsocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +23,19 @@ export class RoomService {
   constructor(private wsService: WebsocketService) {
     this.wsService.callback$.subscribe((res) => {
       this.addNewRoom(res);
-      this.loadRooms();
     });
+
+    this.wsService.roomsObservable$.subscribe(message => {
+      switch (message.type) {
+        case RoomMessageType.AllRoomsSended:
+          this._rooms = message.data;
+          break;
+        case RoomMessageType.NewUsersInRoom:
+          // ...
+          break;
+      }
+    });
+
   }
 
   sendRoomId(roomId: string) {
@@ -40,12 +50,7 @@ export class RoomService {
   addNewRoom(room: RoomInterface) {
     this._rooms.push(room);
   }
-  loadRooms() {
-    this.wsService.allRoomsfroDB().subscribe((res: any) => {
-      this._rooms = res;
-    });
-  }
-
+  
   deleteRoom(id: string) {
     let payload = { roomId: id };
     this.wsService.emitDeletingRoom(payload);

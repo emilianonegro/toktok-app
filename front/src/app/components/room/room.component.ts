@@ -31,7 +31,6 @@ export class RoomComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.roomService.loadRooms();
     this.wsService.getAllRoomsSocket();
   }
 
