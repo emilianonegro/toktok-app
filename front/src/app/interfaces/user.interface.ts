@@ -1,4 +1,4 @@
 export interface UserInterface {
-    name: string
-    room: string
+    name: string;
+    room: string;
 }

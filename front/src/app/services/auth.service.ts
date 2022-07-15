@@ -95,9 +95,13 @@ export class AuthService {
     const token: string = localStorage.getItem(JWT_NAME)!;
 
     const { rol } = this.jwtHelper.decodeToken(token);
-    let isAdmin: boolean;
-    if (rol === 'admin') return (isAdmin = true);
-    return isAdmin!;
+
+    return rol === 'admin';
+
+
+    // let isAdmin: boolean;
+    // if (rol === 'admin') return (isAdmin = true);
+    // return isAdmin!;
   }
 
   userName(): string {

@@ -6,7 +6,7 @@ import { generateJWT } from "../helpers/jwt";
 export const createUser = async (req: Request, res: Response) => {
   const { email, name, password } = req.body;
   let rol = "";
-  if (email == "xenialab@ingogroup.com") {
+  if (email == "xenialab@ingogroup.it") {
     rol = "admin";
   } else {
     rol = "user";

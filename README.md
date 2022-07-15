@@ -1,46 +1,31 @@
-## TokTok App
+# TokTok App
 
-_Application where you can exchange messages with other users in different rooms!_
+This app we will be using:
 
-**Will need:**
+- Angular for the frontend part.
+- NodeJS backend with express module and typeScript.
+- Mongodb for data base.
 
-- Angular v 10+
+### With Docker Compose
 
-- Node.JS v 14+
+Start Docker Desktop
 
-- MongoDB v 4+
+For download: [Docker Desktop - Docker](https://www.docker.com/products/docker-desktop/)
 
----
 
-To have access to the admin page you have to create an account with this email: `xenialab@ingogroup.com`
+#### To start with Docker-Compose:
 
-Or change it in: back/controllers/auth.controllers.ts, line: 9
+    docker-compose up --build -d   
 
----
+#### To Finish with Docker-Compose:
 
-**Ports we use in the project:**
+    docker-compose down 
 
-- Port Node.js: **3000**
+**Ports:**
 
-- Port mongodb: **mongodb://localhost:27017/tokTok**
-
-- Port Angular: **http://localhost:4200**
-
----
-
-**Commands to start:**
-
-Backend:
-
-`npm install` # to install all dependecies
-
-`npm run dev` # to raise development environment
-
-Frontend:
-
-`npm install` # to install all dependecies
-
-`npm start` # to to initialize the Angular application
+- Port nodeJs:        `http://localhost:3000`
+- Port mongodb:   `mongodb://mongo:27017/toktok`
+- Port Angular:      `http://localhost:4200`
 
 ---
 
@@ -57,5 +42,3 @@ Frontend:
 - socket.io: <https://socket.io/docs/v4/>
 
 - Angular Material: <https://material.angular.io/>
-
-#
